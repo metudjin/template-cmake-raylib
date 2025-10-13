@@ -1,0 +1,7 @@
+# Ignore build directories
+cmake-build-linux-debug
+cmake-build-linux-release
+cmake-build-web-debug
+cmake-build-web-release
+cmake-build-windows-debug
+cmake-build-windows-release
