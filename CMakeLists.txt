@@ -68,7 +68,7 @@ endif()
 FetchContent_Declare(
         raylib
         URL https://github.com/raysan5/raylib/archive/refs/tags/${RAYLIB_VERSION}.tar.gz
-        #URL ${CMAKE_SOURCE_DIR}/external/raylib/raylib-${RAYLIB_VERSION}.tar.gz
+        #URL ${CMAKE_SOURCE_DIR}/external/raylib/raylib-${RAYLIB_VERSION}.tar.gz        # Use this if you have a downloaded source of raylib
         FIND_PACKAGE_ARGS
 )
 set(BUILD_EXAMPLES OFF CACHE BOOL "" FORCE)

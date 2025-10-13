@@ -1,9 +1,8 @@
 #ifndef APP_INCLUDES_HPP
 #define APP_INCLUDES_HPP
 
-#include "app_defines.hpp"
 #include "app_constants.hpp"
-#include "app_settings.hpp"
+#include "app_defines.hpp"
 
 #include "raylib.h"
 #include "raymath.h"
@@ -11,7 +10,6 @@
 
 #include <iostream>
 #include <string>
-#include <string_view>
 #include <vector>
 
 

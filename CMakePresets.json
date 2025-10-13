@@ -28,30 +28,6 @@
             }
         },
         {
-            "name": "linux-debug-make",
-            "displayName": "Linux Debug gcc make",
-            "description": "Compilers: gcc, g++, Generator: make",
-            "binaryDir": "${sourceDir}/cmake-build-${presetName}",
-            "cacheVariables": {
-                "CMAKE_C_COMPILER": "gcc",
-                "CMAKE_CXX_COMPILER": "g++",
-                "CMAKE_BUILD_TYPE": "Debug",
-                "PLATFORM": "Desktop"
-            }
-        },
-        {
-            "name": "linux-release-make",
-            "displayName": "Linux Release gcc make",
-            "description": "Compilers: gcc, g++, Generator: make",
-            "binaryDir": "${sourceDir}/cmake-build-${presetName}",
-            "cacheVariables": {
-                "CMAKE_C_COMPILER": "gcc",
-                "CMAKE_CXX_COMPILER": "g++",
-                "CMAKE_BUILD_TYPE": "Release",
-                "PLATFORM": "Desktop"
-            }
-        },
-        {
             "name": "windows-debug-ninja",
             "displayName": "Windows Debug gcc ninja",
             "description": "Compilers: gcc.exe, g++.exe, Generator: ninja",
@@ -69,30 +45,6 @@
             "displayName": "Windows Release gcc ninja",
             "description": "Compilers: gcc.exe, g++.exe, Generator: ninja",
             "generator": "Ninja",
-            "binaryDir": "${sourceDir}/cmake-build-${presetName}",
-            "cacheVariables": {
-                "CMAKE_C_COMPILER": "gcc.exe",
-                "CMAKE_CXX_COMPILER": "g++.exe",
-                "CMAKE_BUILD_TYPE": "Release",
-                "PLATFORM": "Desktop"
-            }
-        },
-        {
-            "name": "windows-debug-make",
-            "displayName": "Windows Debug gcc make",
-            "description": "Compilers: gcc.exe, g++.exe, Generator: mingw32-make.exe",
-            "binaryDir": "${sourceDir}/cmake-build-${presetName}",
-            "cacheVariables": {
-                "CMAKE_C_COMPILER": "gcc.exe",
-                "CMAKE_CXX_COMPILER": "g++.exe",
-                "CMAKE_BUILD_TYPE": "Debug",
-                "PLATFORM": "Desktop"
-            }
-        },
-        {
-            "name": "windows-release-make",
-            "displayName": "Windows Release gcc make",
-            "description": "Compilers: gcc.exe, g++.exe, Generator: mingw32-make.exe",
             "binaryDir": "${sourceDir}/cmake-build-${presetName}",
             "cacheVariables": {
                 "CMAKE_C_COMPILER": "gcc.exe",
@@ -121,34 +73,6 @@
             "displayName": "Web Release emcc ninja",
             "description": "Compilers: emcc, em++, Generator: ninja",
             "generator": "Ninja",
-            "binaryDir": "${sourceDir}/cmake-build-${presetName}",
-            "cacheVariables": {
-                "CMAKE_C_COMPILER": "emcc",
-                "CMAKE_CXX_COMPILER": "em++",
-                "CMAKE_BUILD_TYPE": "Release",
-                "PLATFORM": "Web",
-                "CMAKE_TOOLCHAIN_FILE": "${env:EMSDK}/upstream/emscripten/cmake/Modules/Platform/Emscripten.cmake",
-                "CMAKE_CXX_COMPILER_CLANG_SCAN_DEPS": "${env:EMSDK}/upstream/bin/clang-scan-deps"
-            }
-        },
-        {
-            "name": "web-debug-make",
-            "displayName": "Web Debug emcc make",
-            "description": "Compilers: emcc, em++, Generator: make",
-            "binaryDir": "${sourceDir}/cmake-build-${presetName}",
-            "cacheVariables": {
-                "CMAKE_C_COMPILER": "emcc",
-                "CMAKE_CXX_COMPILER": "em++",
-                "CMAKE_BUILD_TYPE": "Debug",
-                "PLATFORM": "Web",
-                "CMAKE_TOOLCHAIN_FILE": "${env:EMSDK}/upstream/emscripten/cmake/Modules/Platform/Emscripten.cmake",
-                "CMAKE_CXX_COMPILER_CLANG_SCAN_DEPS": "${env:EMSDK}/upstream/bin/clang-scan-deps"
-            }
-        },
-        {
-            "name": "web-release-make",
-            "displayName": "Web Release emcc make",
-            "description": "Compilers: emcc, em++, Generator: make",
             "binaryDir": "${sourceDir}/cmake-build-${presetName}",
             "cacheVariables": {
                 "CMAKE_C_COMPILER": "emcc",

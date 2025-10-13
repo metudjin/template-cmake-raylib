@@ -1,14 +1,14 @@
 # template-cmake-raylib
+This is a C++23 template with CMake and Ninja as build system.  
+It fetches raylib from GitHub and attaches to the project.  
 
 
 ## Information
-This is a C++23 template with CMake and Ninja as build system.  
-It fetches raylib from GitHub and attaches to the project.  
 
 - The CMake minimum version is 3.31.
 - The C++ Version is set to C++23.
 - There is support for C++20 Modules.
-- Most of the templates is written in modern C++17 and above.
+- Most of the template is written in modern C++17 and above.
 
 ### File Structure
 ```text
