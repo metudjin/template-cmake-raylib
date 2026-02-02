@@ -2,11 +2,11 @@
 #define APPLICATION_HPP
 // https://www.raylib.com/cheatsheet/cheatsheet.html
 
-#include "base_core.hpp"
+#include "base_app.hpp"
 
 
 
-class Application : public BaseCore
+class Application : public BaseApp
 {
 public:
     Application();  // Constructor

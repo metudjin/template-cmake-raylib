@@ -26,11 +26,11 @@ Folder structure:
 - src           (all the source code goes in here)
     - app_constants.hpp (Holds defined constants)
     - app_defines.hpp   (Holds defined values and strings)
-    - app_includes.hpp  (Holds all the includes that is passed on to base_core.hpp)
+    - app_includes.hpp  (Holds all the includes that is passed on to base_app.hpp)
     - application.hpp   (Application Declarations GAME CODE GOES HERE)
     - application.cpp   (Aplpication Implementations GAME CODE GOES HERE)
-    - base_core.hpp     (Base Core Declaration)
-    - base_core.cpp     (Base Core Implementation)
+    - base_app.hpp      (Base App Declaration)
+    - base_app.cpp      (Base App Implementation)
     - main.cpp          (This starts the Application)
 ```
 Put all your starter game code in Application.hpp and Application.cpp.

@@ -1,14 +1,14 @@
-#ifndef BASE_CORE_HPP
-#define BASE_CORE_HPP
+#ifndef BASE_APP_HPP
+#define BASE_APP_HPP
 
 #include "app_includes.hpp"
 
 
-class BaseCore
+class BaseApp
 {
 public:
-    BaseCore() = default;
-    ~BaseCore() = default;
+    BaseApp() = default;
+    ~BaseApp() = default;
 
     // DPI scaling functions
     // Use these to scale any hardcoded values to the native display resolution
@@ -21,4 +21,4 @@ public:
 };
 
 
-#endif // BASE_CORE_HPP
+#endif // BASE_APP_HPP
