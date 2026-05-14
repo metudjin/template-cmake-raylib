@@ -162,7 +162,7 @@ endif ()
 
 ### WebAssembly Compile With raylib
 
-if (CMAKE_HOST_LINUX AND ${PLATFORM} MATCHES "Web")
+if (${PLATFORM} MATCHES "Web")
     add_compile_definitions(PLATFORM_WEB)           # raylib
 
     set(EMSDK_PATH $ENV{EMSDK})
