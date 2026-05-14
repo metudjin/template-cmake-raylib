@@ -1,0 +1,5 @@
+message(STATUS "")
+message(STATUS "================ CopyFolders.cmake - Begin ================")
+file(COPY "${CMAKE_SOURCE_DIR}/assets" DESTINATION "${CMAKE_CURRENT_BINARY_DIR}/")
+message(STATUS "================ CopyFolders.cmake - End   ================")
+message(STATUS "")

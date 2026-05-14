@@ -69,9 +69,47 @@ paccache -r
 
 
 ## Windows Install and configure Emscripten by downloading and activating EMSDK
-### NOT COMPLETE!
+#### Start Command Prompt "cmd"
+```bash
+cd %USERPROFILE%
+# Get the emsdk repo
+git clone https://github.com/emscripten-core/emsdk.git
 
+# Enter that directory
+cd emsdk
 
+# Fetch the latest version of the emsdk (not needed the first time you clone)
+git pull
+
+# Download and install the latest SDK tools.
+emsdk.bat install latest
+
+# Make the "latest" SDK "active" for the current user. (writes .emscripten file)
+emsdk.bat activate latest
+
+# Activate PATH and other environment variables in the current terminal
+emsdk_env.bat
+```
+
+- Add PATH to Environment permanently
+
+```bash
+### Next steps for temporary use:
+#   To conveniently access emsdk tools from the command line run the following:
+#   "/Users/user/emsdk/emsdk_env.bat"
+
+# Add the following to PATH in Environment Variables for permanent access
+# Change to correct version of node
+C:\Users\user\emsdk
+C:\Users\user\emsdk\upstream\emscripten
+C:\Users\user\emsdk\node\22.16.0_64bit\bin
+
+# Add the following Environment Variables for permanent access
+# Change to correct version of node and python
+EMSDK = C:\Users\user\emsdk
+EMSDK_NODE = C:\Users\user\emsdk\node\22.16.0_64bit\bin\node.exe
+EMSDK_PYTHON = C:\Users\user\emsdk\python\3.13.3_64bit\python.exe
+```
 
 
 

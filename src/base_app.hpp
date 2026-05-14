@@ -15,7 +15,6 @@ public:
     float ScaleToDPIF(float value);     // Scale with float
     int ScaleToDPII(int value);         // Scale with int
 
-    static inline const std::string assets_path{ASSETS_PATH};
 
 
 };

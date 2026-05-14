@@ -6,10 +6,11 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)     # Enforces the CXX_STANDARD version targ
 set(CMAKE_CXX_EXTENSIONS OFF)           # Makes it more portable by disabling non-standard compiler extensions and flags
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)   # Creates "compile_commands.json" with all build commands
 set(CMAKE_CXX_SCAN_FOR_MODULES ON)      # This handles the build order automatically for CXX Modules
-set(CMAKE_VERBOSE_MAKEFILE ON)          # See the full commands when make is building the project, does not work with ninja.
 
 #include(${CMAKE_SOURCE_DIR}/PreLoad.cmake)  # This file is included by default if its in the same dir as CMakeLists.txt
 #include(${CMAKE_SOURCE_DIR}/cmake/Options.cmake)
+#include("${CMAKE_SOURCE_DIR}/cmake/SymLinks.cmake")
+include("${CMAKE_SOURCE_DIR}/cmake/CopyFolders.cmake")
 
 #set(PLATFORM Desktop)           # Desktop, Web, Android, RPI, DRM, SDL (-DPLATFORM=Desktop as CMake identifier)
 #set(PLATFORM Web)               # Web instead of (-DPLATFORM=Web as CMake identifier)
@@ -54,7 +55,7 @@ include(FetchContent)
 ### Begin FetchContent raylib
 message(STATUS "")
 message(STATUS "======== raylib FetchContent Begin ========")
-set(RAYLIB_VERSION 5.5)
+set(RAYLIB_VERSION 6.0)
 if (${PLATFORM} MATCHES "Desktop")
     #set(OPENGL_VERSION "4.3")       # OPENGL_VERSION "OFF;4.3;3.3;2.1;1.1;ES 2.0;ES 3.0"
 endif()
@@ -74,6 +75,9 @@ FetchContent_Declare(
 set(BUILD_EXAMPLES OFF CACHE BOOL "" FORCE)
 set(BUILD_GAMES OFF CACHE BOOL "" FORCE)
 FetchContent_MakeAvailable(raylib)
+if (TARGET raylib)
+    set_target_properties(raylib PROPERTIES CXX_SCAN_FOR_MODULES OFF)
+endif ()
 message(STATUS "======== raylib FetchContent End   ========")
 ### FetchContent builds raylib as a static lib because raylib has a CMakeLists.txt that is preconfigured for that.
 ### End FetchContent raylib
@@ -121,18 +125,15 @@ if (CMAKE_HOST_LINUX AND ${PLATFORM} MATCHES "Desktop")       # Use LINUX if com
     target_link_libraries(${PROJECT_NAME} PRIVATE raylib)        # raylib
 
     if (CMAKE_BUILD_TYPE STREQUAL "Debug")
-        set(CMAKE_INSTALL_PREFIX "${CMAKE_SOURCE_DIR}/cmake-out/install/linux-debug")
         set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS}")
         set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -g -Wall -Wformat")
     endif ()
 
     if (CMAKE_BUILD_TYPE STREQUAL "Release")
-        set(CMAKE_INSTALL_PREFIX "${CMAKE_SOURCE_DIR}/cmake-out/install/linux-release")
         set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS}")
         set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -O1 -Wall")
     endif ()
 endif ()
-
 
 
 
@@ -147,18 +148,15 @@ if (CMAKE_HOST_WIN32 AND ${PLATFORM} MATCHES "Desktop")       # Use WIN32 if com
     target_link_libraries(${PROJECT_NAME} PRIVATE raylib opengl32 gdi32 winmm)   # raylib
 
     if (CMAKE_BUILD_TYPE STREQUAL "Debug")
-        set(CMAKE_INSTALL_PREFIX "${CMAKE_SOURCE_DIR}/cmake-out/install/windows-debug")
         set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS}")
         set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -g -Wall -Wformat")
     endif ()
 
     if (CMAKE_BUILD_TYPE STREQUAL "Release")
-        set(CMAKE_INSTALL_PREFIX "${CMAKE_SOURCE_DIR}/cmake-out/install/windows-release")
         set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS}")
         set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -O1 -Wall")
     endif ()
 endif ()
-
 
 
 
@@ -168,6 +166,7 @@ if (CMAKE_HOST_LINUX AND ${PLATFORM} MATCHES "Web")
     add_compile_definitions(PLATFORM_WEB)           # raylib
 
     set(EMSDK_PATH $ENV{EMSDK})
+    set(EMSDK_NODE "$ENV{EMSDK_NODE}")
     set(EMSCRIPTEN_PATH ${EMSDK_PATH}/upstream/emscripten)
     set(CLANG_PATH ${EMSDK_PATH}/upstream/bin)
     message(STATUS "")
@@ -175,10 +174,16 @@ if (CMAKE_HOST_LINUX AND ${PLATFORM} MATCHES "Web")
     message(STATUS "EMSDK PATH       : ${EMSDK_PATH}")
     message(STATUS "Emscripten PATH  : ${EMSCRIPTEN_PATH}")
 
-    #set(CMAKE_TOOLCHAIN_FILE ${EMSCRIPTEN_PATH}/cmake/Modules/Platform/Emscripten.cmake)
     set(CMAKE_EXECUTABLE_SUFFIX ".html")
-    set(CMAKE_C_COMPILER emcc)      # Emscripten
-    set(CMAKE_CXX_COMPILER em++)    # Emscripten
+
+    if(CMAKE_HOST_LINUX)
+        set(CMAKE_C_COMPILER emcc)          # Emscripten
+        set(CMAKE_CXX_COMPILER em++)        # Emscripten
+    endif()
+    if(CMAKE_HOST_WIN32)
+        set(CMAKE_C_COMPILER emcc.bat)      # Emscripten
+        set(CMAKE_CXX_COMPILER em++.bat)    # Emscripten
+    endif()
 
     target_link_libraries(${PROJECT_NAME} PRIVATE raylib)       # raylib
 
@@ -201,27 +206,21 @@ if (CMAKE_HOST_LINUX AND ${PLATFORM} MATCHES "Web")
     endif ()
 
     if (ASYNCIFY MATCHES "ON" AND CMAKE_BUILD_TYPE STREQUAL "Release")
-        set(CMAKE_INSTALL_PREFIX "${CMAKE_SOURCE_DIR}/cmake-out/install/web-release-asyncify")
         set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -O3")
     endif ()
 
     if (ASYNCIFY MATCHES "OFF" AND CMAKE_BUILD_TYPE STREQUAL "Release")
-        set(CMAKE_INSTALL_PREFIX "${CMAKE_SOURCE_DIR}/cmake-out/install/web-release")
         set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Os")
     endif ()
 
     if (ASYNCIFY MATCHES "ON" AND CMAKE_BUILD_TYPE STREQUAL "Debug")
-        set(CMAKE_INSTALL_PREFIX "${CMAKE_SOURCE_DIR}/cmake-out/install/web-debug-asyncify")
         set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -g")
     endif ()
 
     if (ASYNCIFY MATCHES "OFF" AND CMAKE_BUILD_TYPE STREQUAL "Debug")
-        set(CMAKE_INSTALL_PREFIX "${CMAKE_SOURCE_DIR}/cmake-out/install/web-debug")
         set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -g")
     endif ()
 
-    ### Set the asset path macro in release mode to a relative path that assumes the assets folder is in the same directory as the game executable
-    target_compile_definitions(${PROJECT_NAME} PUBLIC ASSETS_PATH="./assets/")
 endif ()
 
 

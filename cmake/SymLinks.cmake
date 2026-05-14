@@ -1,0 +1,12 @@
+message(STATUS "")
+message(STATUS "================ SymLinks.cmake - Begin ================")
+file(CREATE_LINK "${CMAKE_SOURCE_DIR}/appdata" "${CMAKE_CURRENT_BINARY_DIR}/appdata" SYMBOLIC)
+file(CREATE_LINK "${CMAKE_SOURCE_DIR}/assets" "${CMAKE_CURRENT_BINARY_DIR}/assets" SYMBOLIC)
+file(CREATE_LINK "${CMAKE_SOURCE_DIR}/data" "${CMAKE_CURRENT_BINARY_DIR}/data" SYMBOLIC)
+file(CREATE_LINK "${CMAKE_SOURCE_DIR}/docs" "${CMAKE_CURRENT_BINARY_DIR}/docs" SYMBOLIC)
+file(CREATE_LINK "${CMAKE_SOURCE_DIR}/scripts" "${CMAKE_CURRENT_BINARY_DIR}/scripts" SYMBOLIC)
+file(CREATE_LINK "${CMAKE_SOURCE_DIR}/tools" "${CMAKE_CURRENT_BINARY_DIR}/tools" SYMBOLIC)
+file(CREATE_LINK "${CMAKE_SOURCE_DIR}/userdata" "${CMAKE_CURRENT_BINARY_DIR}/userdata" SYMBOLIC)
+message(STATUS "================ SymLinks.cmake - End   ================")
+message(STATUS "")
+# Developer Mode in Windows most be activated for symbolic links to work correctly

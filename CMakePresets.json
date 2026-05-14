@@ -2,85 +2,124 @@
     "version": 8,
     "configurePresets": [
         {
-            "name": "linux-debug-ninja",
-            "displayName": "Linux Debug gcc ninja",
-            "description": "Compilers: gcc, g++, Generator: ninja",
+            "name": "base-linux",
+            "hidden": true,
+            "description": "Target: Linux | Compilers: gcc, g++ | Generator: ninja",
             "generator": "Ninja",
-            "binaryDir": "${sourceDir}/cmake-build-${presetName}",
+            "binaryDir": "$env{HOME}/CMakeBuilds/${sourceDirName}/cmake-build-${presetName}",
             "cacheVariables": {
                 "CMAKE_C_COMPILER": "gcc",
                 "CMAKE_CXX_COMPILER": "g++",
-                "CMAKE_BUILD_TYPE": "Debug",
                 "PLATFORM": "Desktop"
             }
         },
         {
-            "name": "linux-release-ninja",
-            "displayName": "Linux Release gcc ninja",
-            "description": "Compilers: gcc, g++, Generator: ninja",
-            "generator": "Ninja",
-            "binaryDir": "${sourceDir}/cmake-build-${presetName}",
+            "name": "linux-debug",
+            "displayName": "Linux Debug",
+            "inherits": "base-linux",
             "cacheVariables": {
-                "CMAKE_C_COMPILER": "gcc",
-                "CMAKE_CXX_COMPILER": "g++",
-                "CMAKE_BUILD_TYPE": "Release",
-                "PLATFORM": "Desktop"
+                "CMAKE_BUILD_TYPE": "Debug"
             }
         },
         {
-            "name": "windows-debug-ninja",
-            "displayName": "Windows Debug gcc ninja",
-            "description": "Compilers: gcc.exe, g++.exe, Generator: ninja",
+            "name": "linux-release",
+            "displayName": "Linux Release",
+            "inherits": "base-linux",
+            "cacheVariables": {
+                "CMAKE_BUILD_TYPE": "Release"
+            }
+        },
+        {
+            "name": "base-windows",
+            "hidden": true,
+            "description": "Target: Windows | Compilers: gcc.exe, g++.exe | Generator: ninja.exe",
             "generator": "Ninja",
-            "binaryDir": "${sourceDir}/cmake-build-${presetName}",
+            "binaryDir": "$env{USERPROFILE}/CMakeBuilds/${sourceDirName}/cmake-build-${presetName}",
             "cacheVariables": {
                 "CMAKE_C_COMPILER": "gcc.exe",
                 "CMAKE_CXX_COMPILER": "g++.exe",
-                "CMAKE_BUILD_TYPE": "Debug",
                 "PLATFORM": "Desktop"
             }
         },
         {
-            "name": "windows-release-ninja",
-            "displayName": "Windows Release gcc ninja",
-            "description": "Compilers: gcc.exe, g++.exe, Generator: ninja",
-            "generator": "Ninja",
-            "binaryDir": "${sourceDir}/cmake-build-${presetName}",
+            "name": "windows-debug",
+            "displayName": "Windows Debug",
+            "inherits": "base-windows",
             "cacheVariables": {
-                "CMAKE_C_COMPILER": "gcc.exe",
-                "CMAKE_CXX_COMPILER": "g++.exe",
-                "CMAKE_BUILD_TYPE": "Release",
-                "PLATFORM": "Desktop"
+                "CMAKE_BUILD_TYPE": "Debug"
             }
         },
         {
-            "name": "web-debug-ninja",
-            "displayName": "Web Debug emcc ninja",
-            "description": "Compilers: emcc, em++, Generator: ninja",
-            "generator": "Ninja",
-            "binaryDir": "${sourceDir}/cmake-build-${presetName}",
+            "name": "windows-release",
+            "displayName": "Windows Release",
+            "inherits": "base-windows",
             "cacheVariables": {
-                "CMAKE_C_COMPILER": "emcc",
-                "CMAKE_CXX_COMPILER": "em++",
-                "CMAKE_BUILD_TYPE": "Debug",
-                "PLATFORM": "Web",
-                "CMAKE_TOOLCHAIN_FILE": "${env:EMSDK}/upstream/emscripten/cmake/Modules/Platform/Emscripten.cmake",
-                "CMAKE_CXX_COMPILER_CLANG_SCAN_DEPS": "${env:EMSDK}/upstream/bin/clang-scan-deps"
+                "CMAKE_BUILD_TYPE": "Release"
             }
         },
         {
-            "name": "web-release-ninja",
-            "displayName": "Web Release emcc ninja",
-            "description": "Compilers: emcc, em++, Generator: ninja",
+            "name": "base-web",
+            "hidden": true,
             "generator": "Ninja",
-            "binaryDir": "${sourceDir}/cmake-build-${presetName}",
+            "cacheVariables": {
+                "PLATFORM": "Web",
+                "CMAKE_TOOLCHAIN_FILE": "$env{EMSDK}/upstream/emscripten/cmake/Modules/Platform/Emscripten.cmake"
+            }
+        },
+        {
+            "name": "base-web-linux",
+            "hidden": true,
+            "description": "Target: Web via Linux | Compilers: emcc, em++ | Generator: ninja",
+            "inherits": "base-web",
+            "binaryDir": "$env{HOME}/CMakeBuilds/${sourceDirName}/cmake-build-${presetName}",
             "cacheVariables": {
                 "CMAKE_C_COMPILER": "emcc",
                 "CMAKE_CXX_COMPILER": "em++",
-                "CMAKE_BUILD_TYPE": "Release",
-                "PLATFORM": "Web",
-                "CMAKE_TOOLCHAIN_FILE": "${env:EMSDK}/upstream/emscripten/cmake/Modules/Platform/Emscripten.cmake",
-                "CMAKE_CXX_COMPILER_CLANG_SCAN_DEPS": "${env:EMSDK}/upstream/bin/clang-scan-deps"
+                "CMAKE_CXX_COMPILER_CLANG_SCAN_DEPS": "$env{EMSDK}/upstream/bin/clang-scan-deps"
+            }
+        },
+        {
+            "name": "web-debug-linux",
+            "displayName": "Web Debug Linux",
+            "inherits": "base-web-linux",
+            "cacheVariables": {
+                "CMAKE_BUILD_TYPE": "Debug"
+            }
+        },
+        {
+            "name": "web-release-linux",
+            "displayName": "Web Release Linux",
+            "inherits": "base-web-linux",
+            "cacheVariables": {
+                "CMAKE_BUILD_TYPE": "Release"
+            }
+        },
+        {
+            "name": "base-web-windows",
+            "hidden": true,
+            "description": "Target: Web via Windows | Compilers: emcc.bat, em++.bat | Generator: ninja.exe",
+            "inherits": "base-web",
+            "binaryDir": "$env{USERPROFILE}/CMakeBuilds/${sourceDirName}/cmake-build-${presetName}",
+            "cacheVariables": {
+                "CMAKE_C_COMPILER": "emcc.bat",
+                "CMAKE_CXX_COMPILER": "em++.bat",
+                "CMAKE_CXX_COMPILER_CLANG_SCAN_DEPS": "$env{EMSDK}/upstream/bin/clang-scan-deps.exe"
+            }
+        },
+        {
+            "name": "web-debug-windows",
+            "displayName": "Web Debug Windows",
+            "inherits": "base-web-windows",
+            "cacheVariables": {
+                "CMAKE_BUILD_TYPE": "Debug"
+            }
+        },
+        {
+            "name": "web-release-windows",
+            "displayName": "Web Release Windows",
+            "inherits": "base-web-windows",
+            "cacheVariables": {
+                "CMAKE_BUILD_TYPE": "Release"
             }
         }
     ]
